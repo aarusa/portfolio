@@ -7,12 +7,47 @@ const filterButtons = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 const sections = document.querySelectorAll('section');
 const scrollIndicator = document.querySelector('.scroll-indicator');
+const interactiveTextItems = document.querySelectorAll('.interactive-text-item');
 
 // State variables
 let lastScroll = 0;
 let isAnimating = false;
 let lastScrollTime = Date.now();
 const SCROLL_THROTTLE = 16; // ~60fps
+
+// Create and append overlay element
+const overlay = document.createElement('div');
+overlay.className = 'scroll-overlay';
+document.body.appendChild(overlay);
+
+// Handle scroll overlay
+function handleScrollOverlay() {
+    const heroContent = document.querySelector('.hero-content');
+    const heroGallery = document.querySelector('.hero-gallery');
+    
+    if (heroContent && heroGallery) {
+        const contentRect = heroContent.getBoundingClientRect();
+        const galleryRect = heroGallery.getBoundingClientRect();
+        
+        // Check if content overlaps with gallery
+        if (contentRect.right > galleryRect.left) {
+            overlay.classList.add('overlay-visible');
+        } else {
+            overlay.classList.remove('overlay-visible');
+        }
+        
+        // Calculate overlap percentage for smooth transition
+        const overlapPercentage = Math.max(0, Math.min(1, (contentRect.right - galleryRect.left) / 200));
+        overlay.style.opacity = overlapPercentage;
+    }
+}
+
+// Initialize scroll listener
+window.addEventListener('scroll', handleScrollOverlay);
+window.addEventListener('resize', handleScrollOverlay);
+
+// Initial check
+document.addEventListener('DOMContentLoaded', handleScrollOverlay);
 
 // Scroll Handling
 function handleScroll() {
@@ -153,6 +188,35 @@ document.querySelector('.work-filters').addEventListener('click', (e) => {
     }
 });
 
+// Interactive text animation
+function initializeInteractiveText() {
+    interactiveTextItems.forEach((item, index) => {
+        // Add initial animation delay
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateX(0)';
+        }, index * 200);
+
+        // Add mouse move effect
+        item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            item.style.setProperty('--mouse-x', `${x}%`);
+            item.style.setProperty('--mouse-y', `${y}%`);
+            item.style.setProperty('--mouse-angle', `${(x / 100) * 360}deg`);
+        });
+
+        // Reset properties on mouse leave
+        item.addEventListener('mouseleave', () => {
+            item.style.removeProperty('--mouse-x');
+            item.style.removeProperty('--mouse-y');
+            item.style.removeProperty('--mouse-angle');
+        });
+    });
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize animations
@@ -162,4 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set initial active filter
     filterProjects('all');
+    
+    // Initialize interactive text
+    initializeInteractiveText();
 }, { once: true });
