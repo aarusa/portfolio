@@ -22,19 +22,19 @@
 
 :root {
     --primary: #1A1A1A;
-    --accent-1: #927163;  /* Rich mocha */
-    --accent-2: #B08C7E;  /* Warm taupe */
+    --accent-1: #8B6B5D;  /* Sophisticated mocha */
+    --accent-2: #A68576;  /* Refined taupe */
     --text: #1A1A1A;      /* Deep black for text */
     --text-light: #4A4A4A; /* Darker secondary text */
     --bg: #FFFFFF;        /* Pure white background */
-    --bg-soft: #F4F1EE;   /* Warm light background */
-    --button-bg: #927163; /* Mocha for buttons */
-    --button-hover: #7D5D50; /* Deeper mocha for hover */
-    --gradient-1: linear-gradient(135deg, #927163 0%, #7D5D50 100%);
-    --gradient-2: linear-gradient(45deg, rgba(146, 113, 99, 0.08) 0%, rgba(125, 93, 80, 0.08) 100%);
-    --gradient-float-1: linear-gradient(120deg, rgba(146, 113, 99, 0.25) 0%, rgba(125, 93, 80, 0.15) 100%);
-    --gradient-float-2: linear-gradient(220deg, rgba(125, 93, 80, 0.2) 0%, rgba(146, 113, 99, 0.15) 100%);
-    --gradient-float-3: linear-gradient(170deg, rgba(146, 113, 99, 0.15) 0%, rgba(125, 93, 80, 0.15) 100%);
+    --bg-soft: #F6F3F1;   /* Softer light background */
+    --button-bg: #8B6B5D; /* Sophisticated mocha for buttons */
+    --button-hover: #735648; /* Deep mocha for hover */
+    --gradient-1: linear-gradient(135deg, #8B6B5D 0%, #735648 100%);
+    --gradient-2: linear-gradient(45deg, rgba(139, 107, 93, 0.08) 0%, rgba(115, 86, 72, 0.08) 100%);
+    --gradient-float-1: linear-gradient(120deg, rgba(139, 107, 93, 0.25) 0%, rgba(115, 86, 72, 0.15) 100%);
+    --gradient-float-2: linear-gradient(220deg, rgba(115, 86, 72, 0.2) 0%, rgba(139, 107, 93, 0.15) 100%);
+    --gradient-float-3: linear-gradient(170deg, rgba(139, 107, 93, 0.15) 0%, rgba(115, 86, 72, 0.15) 100%);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --heading-font: 'Utopia', serif;
     --body-font: 'Utopia', serif;
@@ -1076,7 +1076,7 @@ body {
 /* Footer */
 footer {
     padding: 4rem 2rem;
-    background: var(--accent-1);
+    background: #2C2825;
     position: relative;
     overflow: hidden;
 }
@@ -1092,7 +1092,7 @@ footer {
 }
 
 .footer-content p {
-    color: var(--bg);
+    color: rgba(255, 255, 255, 0.9);
     opacity: 0.95;
 }
 
@@ -1102,11 +1102,11 @@ footer {
 }
 
 .footer-links a {
-    color: var(--bg);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: var(--transition);
     font-size: 1rem;
-    opacity: 0.95;
+    opacity: 0.85;
     position: relative;
 }
 
@@ -1117,7 +1117,7 @@ footer {
     left: 0;
     width: 100%;
     height: 1px;
-    background: var(--bg);
+    background: var(--accent-2);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
@@ -1125,11 +1125,24 @@ footer {
 
 .footer-links a:hover {
     opacity: 1;
+    color: var(--accent-2);
 }
 
 .footer-links a:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+}
+
+/* Add subtle gradient overlay */
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(139, 107, 93, 0.08), rgba(115, 86, 72, 0.05));
+    pointer-events: none;
 }
 
 @media (max-width: 768px) {
